@@ -5,9 +5,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }
+  { path: '', component: LoginComponent }, // Ruta principal (página de inicio)
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }, // Ruta protegida
+  { path: '**', redirectTo: '', pathMatch: 'full' } // Ruta comodín que redirige al login si no se encuentra la ruta
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +14,23 @@ export class LoginComponent {
   @Input()
   password: string = '';
   errorMessage: string = '';
+  hide:boolean = true;
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  form = new FormGroup({email:new FormControl(),password: new FormControl()})
   login(): void {
     this.authService.login(this.email, this.password).subscribe(
-      (response:any) => {
+      response => {
         this.authService.setToken(response.token);
         this.router.navigate(['/dashboard']);
       },
-      (error:any) => {
+      error => {
+        console.log(error);
         this.errorMessage = 'Credenciales incorrectas';
+      },
+      () =>{
+
       }
     );
   }
